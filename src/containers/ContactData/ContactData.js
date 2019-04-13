@@ -4,6 +4,7 @@ import styles from './ContactData.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner'
 import axios from '../../axios-orders';
 import Input from '../../components/UI/Input/Input';
+import {connect} from 'react-redux';
 
 class ContactData extends React.Component{
     state = {
@@ -133,7 +134,7 @@ class ContactData extends React.Component{
         }
 
         const postData = {
-            ingredients : this.props.ingredients,
+            ingredients : this.props.ingr,
             cost: this.props.cost,
             orderData: formData
         }
@@ -194,4 +195,11 @@ class ContactData extends React.Component{
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state)=>{
+    return{
+        ingr: state.ingredients,
+        cost: state.cost
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

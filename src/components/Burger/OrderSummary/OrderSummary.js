@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../../UI/Button/Button'
 
+
 const orderSummary = (props)=>{
     
     let listOfOrder = Object.keys(props.ingredients)
@@ -25,5 +26,20 @@ const orderSummary = (props)=>{
         </div>
     );
 };
+
+/*
+const mapStateToProps = (state)=>{
+    return{
+        ingr: state.ingredients,
+        cost: state.cost
+    }
+}
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        onIgredientAdd: (name)=>dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: name}),
+        onIgredientDelete: (name)=>dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: name})
+    }
+}
+*/
 
 export default orderSummary;
