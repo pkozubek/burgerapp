@@ -1,0 +1,11 @@
+.Order{
+    width: 90%;
+    border: 1px solid gainsboro;
+    box-shadow: 0 2px 3px grey;
+    margin: 5% auto;
+}
+
+.Order span{
+    border: 1px solid black;
+    margin: 5px;
+}
