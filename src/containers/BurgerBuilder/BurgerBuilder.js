@@ -7,12 +7,9 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import WithError from '../../hoc/WithError/WithError';
 
-import {connect} from 'react-redux';
-import * as actionTypes from '../../store/action';
 
-let INGREDIENTS_PRICE = {
-    
-};
+import {connect} from 'react-redux';
+import * as burgerBuilderActions from '../../store/actions/index'; 
 
 class BurgerBuilder extends React.Component{
 
@@ -23,14 +20,7 @@ class BurgerBuilder extends React.Component{
     };
   
     componentDidMount (){
-        /*
-        axios.get('/cost.json/')
-            .then(response =>{
-                INGREDIENTS_PRICE = response.data;
-                console.log(INGREDIENTS_PRICE);
-            }
-        ).catch(error => alert(error))
-        */
+        this.props.ingredientInit();
     }
 
     possibleOrderHandler = (ingredients)=>{
@@ -53,17 +43,7 @@ class BurgerBuilder extends React.Component{
     };
 
     checkoutHandler = () =>{
-        /*
-        const queryParams = [];
-        for(let i in this.props.ingr){
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ingr[i]))
-        }
-        queryParams.push('cost='+ this.props.cost);
-        const queryString = queryParams.join('&');
-        */
-
         this.props.history.push('/checkout'); 
-
     };
 
     handleLoading = () =>{
@@ -74,7 +54,6 @@ class BurgerBuilder extends React.Component{
         cancelClick = {this.cancelOrderHandler} 
         ingredients = {this.props.ingr}
         />
-
 
         if(this.state.loading)
             modal = <Spinner/>
@@ -95,19 +74,36 @@ class BurgerBuilder extends React.Component{
 
         let currentModal = this.handleLoading(); 
 
+        let burger = null;
+        if(this.props.ingr){
+            burger = (
+            <React.Fragment>
+                <Burger ingredients = {this.props.ingr}/>
+                <BuildControls 
+                    removeHandler = {this.props.onIgredientDelete} 
+                    addHandler = {this.props.onIgredientAdd}
+                    disabledInfo = {disabledInfo}
+                    cost = {this.props.cost}
+                    orderBlocked = {this.possibleOrderHandler(this.props.ingr)}
+                    wasOrdererClick = {this.wasOrderedHandler}/>
+            </React.Fragment>
+            );
+        }else{
+            burger = <Spinner/>
+        }
+
+        if(this.props.error){
+            burger = (
+                <div>Burger can't be loaded!</div>
+            )
+        }
+
         return(
         <React.Fragment>
             <Modal show = {this.state.wasOrdered} click = {this.cancelOrderHandler}>
                 {currentModal}
             </Modal>
-            <Burger ingredients = {this.props.ingr}/>
-            <BuildControls 
-                removeHandler = {this.props.onIgredientDelete} 
-                addHandler = {this.props.onIgredientAdd}
-                disabledInfo = {disabledInfo}
-                cost = {this.props.cost}
-                orderBlocked = {this.possibleOrderHandler(this.props.ingr)}
-                wasOrdererClick = {this.wasOrderedHandler}/>
+            {burger}
         </React.Fragment>
         );
     };
@@ -117,13 +113,15 @@ class BurgerBuilder extends React.Component{
 const mapStateToProps = (state)=>{
     return{
         ingr: state.ingredients,
-        cost: state.cost
+        cost: state.cost,
+        error: state.error
     }
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
-        onIgredientAdd: (name)=>dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: name}),
-        onIgredientDelete: (name)=>dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: name})
+        onIgredientAdd: (name)=>dispatch(burgerBuilderActions.addIngredient(name)),
+        onIgredientDelete: (name)=>dispatch(burgerBuilderActions.removeIngredient(name)),
+        ingredientInit: ()=>dispatch(burgerBuilderActions.initIngredients())
     }
 }
 

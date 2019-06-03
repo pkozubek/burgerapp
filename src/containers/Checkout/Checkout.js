@@ -5,11 +5,7 @@ import ContactData from '../../containers/ContactData/ContactData';
 import {connect} from 'react-redux';
 
 class Checkout extends React.Component{
-    state = {
-        ingredients: null,
-        cost: 0
-    }
-
+    
     checkoutCancel = ()=>{
         this.props.history.goBack();
     }

@@ -1,15 +1,18 @@
 import React from 'react';
 import Button from '../../UI/Button/Button'
-
+import {connect} from 'react-redux';
 
 const orderSummary = (props)=>{
     
-    let listOfOrder = Object.keys(props.ingredients)
+    let listOfOrder = null
+    if(props.ingr){
+    listOfOrder = Object.keys(props.ingredients)
     .map((ingredientsKey)=>{
         return (<li key = {ingredientsKey}>{ingredientsKey} : {props.ingredients[ingredientsKey]}</li>);
     }
     )
-    
+    }
+
     return(
         <div>
             <h1>Your order:</h1>
@@ -27,19 +30,10 @@ const orderSummary = (props)=>{
     );
 };
 
-/*
 const mapStateToProps = (state)=>{
     return{
         ingr: state.ingredients,
-        cost: state.cost
     }
 }
-const mapDispatchToProps = (dispatch)=>{
-    return{
-        onIgredientAdd: (name)=>dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: name}),
-        onIgredientDelete: (name)=>dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: name})
-    }
-}
-*/
 
-export default orderSummary;
+export default connect(mapStateToProps)(orderSummary);
