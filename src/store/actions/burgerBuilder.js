@@ -23,7 +23,6 @@ export const setIngredients = (initIngredients)=>{
 }
 
 export const setIngredientsImportFail = ()=>{
-    console.log('blad');
     return{
         type: actionTypes.INIT_INGRIDIENTS_FAIL
     }

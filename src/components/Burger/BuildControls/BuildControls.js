@@ -10,8 +10,6 @@ const buildControls= (props) => {
         {label: 'Meat', type: 'meat'}
     ];
 
-    console.log(props.orderBlocked);
-
     return(
         <div className = {styles.BuildControls}>
             <p>Current cost: <b>{Number(props.cost).toFixed(2)}</b></p>

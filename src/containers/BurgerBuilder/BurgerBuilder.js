@@ -7,9 +7,8 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import WithError from '../../hoc/WithError/WithError';
 
-
 import {connect} from 'react-redux';
-import * as burgerBuilderActions from '../../store/actions/index'; 
+import * as actions from '../../store/actions/index'; 
 
 class BurgerBuilder extends React.Component{
 
@@ -43,6 +42,7 @@ class BurgerBuilder extends React.Component{
     };
 
     checkoutHandler = () =>{
+        this.props.orderInit();
         this.props.history.push('/checkout'); 
     };
 
@@ -112,16 +112,17 @@ class BurgerBuilder extends React.Component{
 
 const mapStateToProps = (state)=>{
     return{
-        ingr: state.ingredients,
-        cost: state.cost,
-        error: state.error
+        ingr: state.burgerBuilder.ingredients,
+        cost: state.burgerBuilder.cost,
+        error: state.burgerBuilder.error
     }
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
-        onIgredientAdd: (name)=>dispatch(burgerBuilderActions.addIngredient(name)),
-        onIgredientDelete: (name)=>dispatch(burgerBuilderActions.removeIngredient(name)),
-        ingredientInit: ()=>dispatch(burgerBuilderActions.initIngredients())
+        onIgredientAdd: (name)=>dispatch(actions.addIngredient(name)),
+        onIgredientDelete: (name)=>dispatch(actions.removeIngredient(name)),
+        ingredientInit: ()=>dispatch(actions.initIngredients()),
+        orderInit: ()=>dispatch(actions.bugerOrderInit())
     }
 }
 

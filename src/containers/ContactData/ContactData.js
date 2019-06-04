@@ -5,6 +5,8 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import axios from '../../axios-orders';
 import Input from '../../components/UI/Input/Input';
 import {connect} from 'react-redux';
+import WithError from '../../hoc/WithError/WithError';
+import * as orderActions from '../../store/actions/index';
 
 class ContactData extends React.Component{
     state = {
@@ -102,7 +104,6 @@ class ContactData extends React.Component{
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
         updatedFormElement.moded = true;
-        console.log(updatedFormElement);
 
         updatedForm[inputId] = updatedFormElement;
 
@@ -125,8 +126,6 @@ class ContactData extends React.Component{
             loading: true
         });
         
-        console.log(this.props);
-
         let formData = {};
 
         for(let formElementId in this.state.orderForm ){
@@ -139,19 +138,7 @@ class ContactData extends React.Component{
             orderData: formData
         }
 
-        axios.post('/orders.json', postData )
-        .then(resposne => {
-            this.setState ( {
-                loading: false
-            });
-            this.props.history.push('/');
-        })
-        .catch(error =>{
-            this.setState ( {
-                loading: false
-            });
-        });
-        
+        this.props.handleBurgerOrder(postData);               
     }
 
     render(){
@@ -185,7 +172,7 @@ class ContactData extends React.Component{
             })}
             <Button buttonType = 'Success' disabled = {!this.state.formIsValid}>ORDER!</Button>
         </form>);
-        if(this.state.loading){
+        if(this.props.loading){
             form = <Spinner/>
         }
         return(
@@ -197,9 +184,16 @@ class ContactData extends React.Component{
 
 const mapStateToProps = (state)=>{
     return{
-        ingr: state.ingredients,
-        cost: state.cost
+        ingr: state.burgerBuilder.ingredients,
+        cost: state.burgerBuilder.cost,
+        loading: state.order.loading
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        handleBurgerOrder: (postData)=>dispatch(orderActions.handleBurgerOrder(postData))
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(WithError(ContactData,axios));

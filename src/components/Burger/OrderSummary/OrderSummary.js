@@ -32,7 +32,7 @@ const orderSummary = (props)=>{
 
 const mapStateToProps = (state)=>{
     return{
-        ingr: state.ingredients,
+        ingr: state.burgerBuilder.ingredients,
     }
 }
 
