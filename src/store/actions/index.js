@@ -8,3 +8,7 @@ export {
     bugerOrderInit,
     handleFetchOrders
 } from './orders';
+export{
+    loginHandle,
+    logOut
+} from './login';

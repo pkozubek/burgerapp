@@ -1,6 +1,7 @@
 import styles from './BuildControls.module.css';
 import BuildControl from  './BuildControl/BuildControl';
 import React from 'react';
+import {connect} from 'react-redux';
 
 const buildControls= (props) => {
     const controls = [
@@ -24,9 +25,15 @@ const buildControls= (props) => {
             <button 
                 onClick = {props.wasOrdererClick}
                 className = {styles.OrderButton} 
-                disabled = {props.orderBlocked}>ORDER</button>
+                disabled = {props.orderBlocked}>{props.isAuth ? 'ORDER': 'GO TO LOGIN SCREEN'} </button>
         </div>
     );
 };
 
-export default buildControls;
+const mapStateToProps = (state)=>{
+    return{
+        isAuth: state.login.token !== null
+    }
+}
+
+export default connect(mapStateToProps)(buildControls);

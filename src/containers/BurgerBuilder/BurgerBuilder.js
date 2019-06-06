@@ -34,7 +34,11 @@ class BurgerBuilder extends React.Component{
     }
 
     wasOrderedHandler = ()=>{
-        this.setState({wasOrdered: true});
+        
+        if(this.props.isAuth)
+            this.setState({wasOrdered: true});
+        else
+            this.props.history.push('/login');
     };
     
     cancelOrderHandler = () => {
@@ -114,7 +118,8 @@ const mapStateToProps = (state)=>{
     return{
         ingr: state.burgerBuilder.ingredients,
         cost: state.burgerBuilder.cost,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuth : state.login.token !== null
     }
 }
 const mapDispatchToProps = (dispatch)=>{

@@ -122,9 +122,10 @@ class ContactData extends React.Component{
     orderHandler = (event)=>{
         event.preventDefault();
 
+        /*
         this.setState ( {
             loading: true
-        });
+        });*/
         
         let formData = {};
 

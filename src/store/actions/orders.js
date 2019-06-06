@@ -63,11 +63,12 @@ export const fetchOrdersLoad = ()=>{
     }
 }
 
-export const handleFetchOrders = ()=>{
+export const handleFetchOrders = (token)=>{
     return dispatch =>{
     dispatch(fetchOrdersLoad());
-
-    axios.get('/orders.json')
+    const url = '/orders.json?auth=' + token;
+    console.log(url);
+    axios.get(url)
     .then((res)=>{
         const storedOrders = [];
         for(let key in res.data){

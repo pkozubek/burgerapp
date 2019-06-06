@@ -34,9 +34,9 @@ const withError = (WrappedCopoment,axios)=>{
             return(
                 <React.Fragment>
                     <Modal 
-                    show = {this.state.error !== null}
+                    show = {this.state.error}
                     click = {this.confirmError}>
-                        {this.state.error !== null ? this.state.error.message : null}
+                        {this.state.error ? this.state.error.message : null}
                     </Modal>
                     <WrappedCopoment {...this.props}/>
                 </React.Fragment>

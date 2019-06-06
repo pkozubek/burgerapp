@@ -2,9 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utitlity';
  
 const initialState = {
-    ingredients: null,
+    ingredients: {},
     cost: 2,
-    error: false
+    error: null
 }
 
 const INGREDIENT_PRICE = {
@@ -45,10 +45,10 @@ const reducer = (state = initialState,action)=>{
         return removeIngredient(state,action);
 
         case actionTypes.INIT_INGRIDIENTS:
-        return updateObject(state,{ ingredients:action.ingredients, error: false})
+        return updateObject(state,{ cost: 2,ingredients:action.ingredients, error: false})
 
         case actionTypes.INIT_INGRIDIENTS_FAIL:
-        return updateObject(state,{ cost: 2, error: true})
+        return updateObject(state,{error: true})
 
         default:
             return state;
