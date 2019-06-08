@@ -9,7 +9,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 class Orders extends React.Component{
 
     componentDidMount(){
-        console.log(this.props.token);
        this.props.handleFetchOrders(this.props.token, this.props.userId);
     }
 

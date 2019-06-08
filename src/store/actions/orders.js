@@ -33,12 +33,9 @@ export const handleBurgerOrder = (orderData, token)=>{
     return dispatch =>{
     dispatch(burgerOrderLoading());
 
-    console.log(orderData);
-
     const url = '/orders.json?auth=' + token;
     axios.post(url, orderData )
         .then(response => {
-            console.log(response);
             dispatch(burgerOrderSuccess(response.data.name, orderData));
         })
         .catch(error =>{
@@ -70,8 +67,7 @@ export const fetchOrdersLoad = ()=>{
 export const handleFetchOrders = (token,userId)=>{
     return dispatch =>{
     dispatch(fetchOrdersLoad());
-    const url = '/orders.json?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
-    console.log(url);
+    const url = '/orders.json?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"gi';
     axios.get(url)
     .then((res)=>{
         const storedOrders = [];

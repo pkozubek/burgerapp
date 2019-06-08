@@ -3,8 +3,6 @@ import styles from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
 
 const navigationItems = (props) =>{
-    console.log(props.isAuth);
-
     return (
         <ul className = {styles.NavigationItems} >
                 <NavigationItem link = '/' active = {true} >Burger</NavigationItem>

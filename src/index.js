@@ -10,6 +10,7 @@ import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import ordersReducer from './store/reducers/order';
 import loginReducer from './store/reducers/login';
 import thunk from 'redux-thunk';
+require('dotenv').config();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

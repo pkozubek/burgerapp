@@ -5,9 +5,6 @@ import Button from '../../UI/Button/Button'
 import styles from './CheckoutSummary.module.css'
 
 const checkoutSummary = (props)=>{
-    
-    console.log(props);
-
     return (
         <div className = {styles.CheckoutSummary}>
             <h1>Thats your burger, bon'apetit!</h1>

@@ -57,9 +57,9 @@ export const loginHandle = (email,password, isRegister)=>{
         let url = null
         
         if(isRegister)
-            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyAVgT3cJ2EeHwZEDnFjHh94JE5eFnNX5Do';
+            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.REACT_APP_FIREBASE_KEY;
         else
-            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyAVgT3cJ2EeHwZEDnFjHh94JE5eFnNX5Do';
+            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + process.env.REACT_APP_FIREBASE_KEY;
 
         axios.post(url,config)
         .then(
@@ -88,7 +88,6 @@ export const checkLoginStatus = ()=>{
         if(!token)
             dispatch(logOut());
         else{
-            console.log(localStorage.getItem('expirationDate'));
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
             if(expirationDate > new Date()){
                 dispatch(loginSuccess(token,userId));

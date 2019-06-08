@@ -6,6 +6,7 @@ import * as actions from '../../store/actions/index';
 import {connect} from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import {Redirect} from 'react-router-dom';
+import {checkValidity} from '../../shared/shared';
 
 class LoginScreen extends Component {
     state = {
@@ -50,30 +51,6 @@ class LoginScreen extends Component {
         }
     }
 
-    checkValidity = (value, rules)=>{
-        let isValid = true;
-
-        if(rules.required){
-            isValid = value.trim() !== '' && isValid;
-
-            if(rules.minLength){
-                isValid = value.length >= rules.minLength && isValid;
-            }
-
-            if(rules.maxLength){
-                isValid = value.length <= rules.maxLength && isValid;
-            }
-
-            if(rules.isEmail){
-                isValid = /\S+@\S+\.\S+/.test(value) && isValid
-            }
-        }
-        else{
-            isValid = true;
-        }
-        return isValid;
-    }
-
     changeValHandler = (event, controlName) => {
 
         const updatedInputs = {
@@ -81,12 +58,10 @@ class LoginScreen extends Component {
             [controlName]: {
                 ...this.state.inputs[controlName],
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value , this.state.inputs[controlName].validation),
+                valid: checkValidity(event.target.value , this.state.inputs[controlName].validation),
                 moded: true
             }
         }
-
-        console.log(updatedInputs);
 
         this.setState({
             inputs: updatedInputs
