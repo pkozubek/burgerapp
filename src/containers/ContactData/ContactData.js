@@ -136,10 +136,11 @@ class ContactData extends React.Component{
         const postData = {
             ingredients : this.props.ingr,
             cost: this.props.cost,
-            orderData: formData
+            orderData: formData,
+            userId: this.props.userId
         }
 
-        this.props.handleBurgerOrder(postData);               
+        this.props.handleBurgerOrder(postData, this.props.token);               
     }
 
     render(){
@@ -187,13 +188,15 @@ const mapStateToProps = (state)=>{
     return{
         ingr: state.burgerBuilder.ingredients,
         cost: state.burgerBuilder.cost,
-        loading: state.order.loading
+        loading: state.order.loading,
+        userId: state.login.userId,
+        token: state.login.token
     }
 }
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        handleBurgerOrder: (postData)=>dispatch(orderActions.handleBurgerOrder(postData))
+        handleBurgerOrder: (postData,token)=>dispatch(orderActions.handleBurgerOrder(postData,token))
     }
 }
 

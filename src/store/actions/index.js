@@ -10,5 +10,7 @@ export {
 } from './orders';
 export{
     loginHandle,
-    logOut
+    logOut,
+    changeRedirect,
+    checkLoginStatus
 } from './login';

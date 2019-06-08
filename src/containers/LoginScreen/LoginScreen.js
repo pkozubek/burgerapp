@@ -44,6 +44,12 @@ class LoginScreen extends Component {
         register: true
     }
 
+    componentDidMount(){
+        if( !this.props.isBuilded && this.props.redirectUrl !== '/'){
+            this.props.redirectUrl()
+        }
+    }
+
     checkValidity = (value, rules)=>{
         let isValid = true;
 
@@ -160,7 +166,7 @@ class LoginScreen extends Component {
 
         let authRedirect = null
         if(this.props.isAuth)
-            authRedirect = <Redirect to = '/'/>
+            authRedirect = <Redirect to = {this.props.urlRedirect}/>
 
         return (<div className = {Styles.LoginScreen}>
            {authRedirect}
@@ -174,13 +180,16 @@ const mapStateToProps = state => {
     return {
         loading: state.login.load,
         error: state.login.error,
-        isAuth: state.login.token !== null
+        isAuth: state.login.token !== null,
+        urlRedirect: state.login.urlRedirect,
+        isBuilded: state.burgerBuilder.isBuilded
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
-        loginHandle : (email,password,isRegister)=>dispatch(actions.loginHandle(email,password, isRegister))
+        loginHandle : (email,password,isRegister)=>dispatch(actions.loginHandle(email,password, isRegister)),
+        redirectUrl : ()=>dispatch(actions.changeRedirect('/'))
     }
 }
 

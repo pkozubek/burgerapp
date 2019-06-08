@@ -4,7 +4,8 @@ import { updateObject } from '../utitlity';
 const initialState = {
     ingredients: {},
     cost: 2,
-    error: null
+    error: null,
+    isBuilded: false
 }
 
 const INGREDIENT_PRICE = {
@@ -19,7 +20,8 @@ const addIngredient = (state,action)=>{
     const updatedIngredientsAdd = updateObject(state.ingredients, updatedIngredientAdd);
     const updatedStateAdd = {
         ingredients: updatedIngredientsAdd,
-        cost: state.cost + INGREDIENT_PRICE[action.ingredientName]
+        cost: state.cost + INGREDIENT_PRICE[action.ingredientName],
+        isBuilded: true 
     }
 
     return updatedStateAdd
@@ -30,7 +32,8 @@ const removeIngredient =(state,action)=>{
             const updatedIngredientsRem = updateObject(state.ingredients, updatedIngredientRem);
             const updatedState = {
                 ingredients: updatedIngredientsRem,
-                cost: state.cost + INGREDIENT_PRICE[action.ingredientName]
+                cost: state.cost + INGREDIENT_PRICE[action.ingredientName],
+                isBuilded: true 
             }
     
     return updatedState
@@ -45,7 +48,7 @@ const reducer = (state = initialState,action)=>{
         return removeIngredient(state,action);
 
         case actionTypes.INIT_INGRIDIENTS:
-        return updateObject(state,{ cost: 2,ingredients:action.ingredients, error: false})
+        return updateObject(state,{ cost: 2,ingredients:action.ingredients, error: false, isBuilded: false})
 
         case actionTypes.INIT_INGRIDIENTS_FAIL:
         return updateObject(state,{error: true})

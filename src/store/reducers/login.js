@@ -5,7 +5,8 @@ const initialState = {
     token: null,
     userId: null,
     error: null,
-    load: false
+    load: false,
+    urlRedirect: '/'
 }
 
 const reducer = (state = initialState, action)=>{
@@ -27,6 +28,9 @@ const reducer = (state = initialState, action)=>{
         case(actionTypes.LOGIN_LOGOUT):
             return updateObject(state,{userId: null, token: null});
 
+        case(actionTypes.REDIRECT_CHANGE):
+            return updateObject(state,{urlRedirect: action.urlRedirect});
+        
         default: return state;
         
     }

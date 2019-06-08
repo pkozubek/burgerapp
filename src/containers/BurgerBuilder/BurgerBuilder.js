@@ -37,8 +37,10 @@ class BurgerBuilder extends React.Component{
         
         if(this.props.isAuth)
             this.setState({wasOrdered: true});
-        else
+        else{
+            this.props.changeURL('/checkout');
             this.props.history.push('/login');
+        }
     };
     
     cancelOrderHandler = () => {
@@ -119,7 +121,8 @@ const mapStateToProps = (state)=>{
         ingr: state.burgerBuilder.ingredients,
         cost: state.burgerBuilder.cost,
         error: state.burgerBuilder.error,
-        isAuth : state.login.token !== null
+        isAuth : state.login.token !== null,
+        isBuilded: state.burgerBuilder.isBuilded
     }
 }
 const mapDispatchToProps = (dispatch)=>{
@@ -127,7 +130,8 @@ const mapDispatchToProps = (dispatch)=>{
         onIgredientAdd: (name)=>dispatch(actions.addIngredient(name)),
         onIgredientDelete: (name)=>dispatch(actions.removeIngredient(name)),
         ingredientInit: ()=>dispatch(actions.initIngredients()),
-        orderInit: ()=>dispatch(actions.bugerOrderInit())
+        orderInit: ()=>dispatch(actions.bugerOrderInit()),
+        changeURL: (url)=>dispatch(actions.changeRedirect(url))
     }
 }
 
